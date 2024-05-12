@@ -13,22 +13,24 @@ Jorge Martinez.
 ## Comandos
 
 ```
-git clone https://github.com/jorgegastonmartinez/backend.git
+git clone https://github.com/jorgegastonmartinez/practicas-backend.git
 npm start
 ```
 
 ## Instrucciones de uso
 
-Descargue el proyecto, desde GitHub, con el comando git clone. Dentro del package.json modifique el  "start": "node --watch desafio_entregable_clase_10/src/app.js". 
+Descargue el proyecto, desde GitHub, con el comando git clone. Dentro del package.json modifique el  "start": "node --watch primera_practica_integradora/src/app.js". 
 Corra la app con el comando npm start.
 
 ## Imagenes del proyecto
 
-mustra de http://localhost:8080/home
-![](./desafio_entregable_clase_10/src/public/img/img-1.jpg)
+mustra dehttp://localhost:8080/home
 
-muestra de http://localhost:8080/realtimeproducts
-![](./desafio_entregable_clase_10/src/public/img/img-2.jpg)
+![](./)
+
+muestra de 
+
+![](./)
 
 
 ## Contacto
