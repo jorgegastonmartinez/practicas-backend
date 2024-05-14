@@ -16,13 +16,13 @@ app.use(express.urlencoded({ extended: true }));
 
 
 //
-app.engine("handelbars", handlebars.engine());
+// app.engine("handelbars", handlebars.engine());
 
-app.set("views", __dirname + "/views");
+// app.set("views", __dirname + "/views");
 
-app.set("view engine", "handlebars");
+// app.set("view engine", "handlebars");
 
-app.use(express.static(__dirname + "/public"));
+// app.use(express.static(__dirname + "/public"));
 
 //
 
