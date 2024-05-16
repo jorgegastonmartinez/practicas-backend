@@ -14,11 +14,10 @@
 
 import mongoose from 'mongoose';
 
-const messageCollection = "Mensajes";
+const messageCollection = "messages";
 
-// Define el esquema para los mensajes
 const messageSchema = new mongoose.Schema({
-  socketId: { type: String },
+  user: { type: String },
   message: { type: String },
 }); 
 

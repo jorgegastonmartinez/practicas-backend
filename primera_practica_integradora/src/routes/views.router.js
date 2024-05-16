@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     const mensajes = await messageModel.find().lean();
-    res.render("index", {mensajes});
+    res.render("chat", {mensajes});
   } catch (error) {
     console.log("error al mostrar los mensajes", error);
   }

@@ -53,7 +53,7 @@ socketServer.on("connection", (socket) => {
     messages.push(message);
 
     socketServer.emit("newMessage", {
-      socketId: socket.id,
+      user: socket.id,
       message: message,
     });
   });

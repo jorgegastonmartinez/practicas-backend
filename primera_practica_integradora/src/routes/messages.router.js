@@ -13,11 +13,11 @@ router.get("/", async (req, res) => {
 })
 
 router.post("/", async (req, res) => {
-    let { socketId, message } = req.body;
-    if (!socketId || !message) {
+    let { user, message } = req.body;
+    if (!user || !message) {
         res.send({ status: "error", error: "Faltan completar datos" });
     }
-    let result = await messageModel.create({ socketId, message });
+    let result = await messageModel.create({ user, message });
     res.send({ result: "success", payload: result });
   
 });
