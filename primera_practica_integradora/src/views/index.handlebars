@@ -8,5 +8,12 @@
 
 <div id="messageList"></div>
 
+  <h1>Messages</h1>
+    <ul>
+        {{#each mensajes}}
+            <h3>{{this.socketId}} - {{this.message}} </h3>
+        {{/each}}
+    </ul>
+
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>
