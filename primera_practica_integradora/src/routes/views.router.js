@@ -10,7 +10,6 @@ router.get("/", async (req, res) => {
   } catch (error) {
     console.log("error al mostrar los mensajes", error);
   }
-  
 });
 
 export default router;
