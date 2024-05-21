@@ -10,6 +10,7 @@ import viewsRouter from "./routes/views.router.js";
 import userRouter from "./routes/users.router.js";
 import productRouter from "./routes/products.router.js";
 import messageRouter from "./routes/messages.router.js";
+import cartRouter from "./routes/carts.router.js";
 
 const app = express();
 const PORT = 8080;
@@ -40,6 +41,7 @@ mongoose
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
 app.use("/api/messages", messageRouter);
+app.use("/api/carts", cartRouter);
 
 const messages = [];
 

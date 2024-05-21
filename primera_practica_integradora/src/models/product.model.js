@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const productCollection = "Productos";
+const productCollection = "products";
 
 const productSchema = new mongoose.Schema({
     title: { type: String, require: true, max: 50 },
