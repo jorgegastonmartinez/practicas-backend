@@ -39,6 +39,7 @@ mongoose
   .catch((error) => console.error("Error en la conexión", error));
 
 app.use("/api/products", productRouter);
+
 app.use("/api/users", userRouter);
 app.use("/api/messages", messageRouter);
 app.use("/api/carts", cartRouter);
