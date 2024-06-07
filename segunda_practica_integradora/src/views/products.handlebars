@@ -1,0 +1,83 @@
+<h2>Bienvenido al ecommerce de la Chocolatería San Ginés</h2>
+<p>Nombre: {{user.first_name}} </p>
+<p>Apellido: {{user.last_name}} </p>
+<p>Email: {{user.email}} </p>
+<p>Edad: {{user.age}}</p>
+<p>Role: {{user.role}} </p>
+<form action="/api/sessions/logout" method="POST">
+    <button type="submit">Cerrar sesión</button>
+</form>
+
+{{#if isValid}}
+<div>
+    {{#each docs}}
+    <div>
+        <h2>Producto: {{this.title}} &nbsp; descripcion: {{this.description}}</h2>
+        <h4>Precio: {{this.price}} &nbsp; Stock: {{this.stock}}</h4>
+        <form class="add-to-cart-form" data-product-id="{{this._id}}">
+            <button type="submit">Add to Cart</button>
+        </form>
+    </div>
+    <br>
+    {{/each}}
+</div>
+<br>
+<div>
+    {{#if hasPrevPage}}
+    <a href={{this.prevLink}}><< Anterior</a>
+    {{/if}}
+    &nbsp;
+    {{this.page}}
+    &nbsp;
+    {{#if hasNextPage}}
+        <a href={{this.nextLink}}>Siguiente >></a>
+    {{/if}} 
+</div>
+{{else}}
+<h1>No hay productos disponibles</h1>
+{{/if}}
+</div>
+
+<script>
+    document.querySelectorAll('.add-to-cart-form').forEach(form => {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const productId = form.getAttribute('data-product-id');
+            
+            try {
+                const cartResponse = await fetch('/api/carts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!cartResponse.ok) {
+                    const errorText = await cartResponse.text();
+                    throw new Error(errorText);
+                }
+                const cartResult = await cartResponse.json();
+                const cartId = cartResult.cart._id;
+                
+                const response = await fetch(`/api/carts/${cartId}/products/${productId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ quantity: 1 })
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(errorText);
+                }
+                    alert('Producto agregado al carrito');
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert(`Error al agregar producto al carrito: ${error.message}`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

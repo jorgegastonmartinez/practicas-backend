@@ -1,6 +1,6 @@
 ## Título del Proyecto
 
-Primera práctica integradora clase 15
+Segunda práctica integradora clase 24
 
 ## Curso
 
@@ -19,7 +19,7 @@ npm start
 
 ## Instrucciones de uso
 
-Descargue el proyecto, desde GitHub, con el comando git clone. Dentro del package.json modifique el  "start": "node --watch primera_practica_integradora/src/app.js". 
+Descargue el proyecto, desde GitHub, con el comando git clone. Dentro del package.json modifique el  "start": "node --watch segunda_practica_integradora/src/app.js". 
 Corra la app con el comando npm start.
 
 ## Imagenes del proyecto

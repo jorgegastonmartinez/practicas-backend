@@ -1,0 +1,11 @@
+<h1>{{message}}</h1>
+<h1>Carrito ID: {{this._id}}</h1>
+<ul>
+    {{#each products}}
+    <h2>
+        Producto: {{this.product.title}}
+        cantidad: {{this.quantity}}
+    </h2>
+    {{/each}}
+</ul>
+<h2>Total: {{this.total}}</h2>
