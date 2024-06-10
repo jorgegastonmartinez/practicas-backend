@@ -3,6 +3,13 @@ import mongoose from "mongoose";
 const cartsCollection = "carts";
 
 const cartsSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users",
+        unique: true,
+        required: true,
+        },
+
     products: {
         type: [
             {
@@ -13,7 +20,7 @@ const cartsSchema = new mongoose.Schema({
                 quantity: {
                     type: Number,
                     required: true,
-                    min: 1,
+                    min: 1
                 },
             },
         ],

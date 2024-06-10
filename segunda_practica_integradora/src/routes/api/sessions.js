@@ -1,7 +1,7 @@
 import { Router } from "express";
-import User from "../../models/user.model.js";
+// import User from "../../models/user.model.js";
 import passport from "passport";
-import { createHash, isValidPassword } from "../../utils.js";
+// import { createHash, isValidPassword } from "../../utils.js";
 
 const router = Router();
 
@@ -21,6 +21,7 @@ router.post("/login", passport.authenticate("login", {failureRedirect: "faillogi
     }
     try {
     req.session.user ={
+      _id: req.user._id,
       first_name: req.user.first_name,
       last_name: req.user.last_name,
       email: req.user.email,
