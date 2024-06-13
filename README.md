@@ -24,17 +24,17 @@ Corra la app con el comando npm start.
 
 ## Imagenes del proyecto
 
-mustra de método POST en localhost:8080/api/products.
+Mustra de modelo users.
 
-![](./primera_practica_integradora/src/public/img/Captura%20de%20pantalla%202024-05-20%20a%20la(s)%2010.57.20 p. m..png)
+![](./segunda_practica_integradora/src/public/img/Captura%20de%20pantalla%202024-06-12%20a%20la(s)%2010.10.56 p. m..png)
 
-muestra de vista chat.handlebars.
+Muestra de sessions login.
 
-![](./primera_practica_integradora/src/public/img/Captura%20de%20pantalla%202024-05-16%20a%20la(s)%206.43.12 p. m..png)
+![](./segunda_practica_integradora/src/public/img/Captura%20de%20pantalla%202024-06-12%20a%20la(s)%2010.11.27 p. m..png)
 
-mustra de la estructura del proyecto solicitada.
+Muestra ruta api/sessions/current.
 
-![](./primera_practica_integradora/src/public/img/Captura%20de%20pantalla%202024-05-21%20a%20la(s)%2012.48.49 a. m..png)
+![](./segunda_practica_integradora/src/public/img/Captura%20de%20pantalla%202024-06-12%20a%20la(s)%2010.12.28 p. m..png)
 
 
 ## Contacto

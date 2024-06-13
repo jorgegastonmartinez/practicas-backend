@@ -8,6 +8,10 @@
     <button type="submit">Cerrar sesión</button>
 </form>
 
+<form action="/api/sessions/current" method="GET">
+    <button type="submit">Ir al perfil</button>
+</form>
+
 {{#if isValid}}
 <div>
     {{#each docs}}
