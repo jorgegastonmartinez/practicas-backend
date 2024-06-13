@@ -51,49 +51,6 @@ router.get("/carts/:cid", async (req, res) => {
     }
 });
 
-// router.post("/carts/:cid/products/:pid", async (req, res) => {
-//     try {
-//         let { cid } = req.params;
-//         let { pid } = req.params;
-//         let { quantity } = req.body;
-        
-//         if (!mongoose.Types.ObjectId.isValid(cid) || !mongoose.Types.ObjectId.isValid(pid)) {
-//             return res.status(400).json({ error: "ID carrito o producto no válido" });
-//         }
-//         let cart = await cartModel.findById(cid).populate("products.product");
-//         if (!cart) {
-//             return res.status(404).json({ error: "Carrito no encontrado" });
-//         }
-//         let product = await productsModel.findById(pid);
-//         if (!product) {
-//             return res.status(404).json({ error: "Producto no encontrado" });
-//         }
-//         const existsProductIndex = cart.products.findIndex(item => item.product._id.toString() === pid);
-
-//         if (existsProductIndex !== -1) {
-//             cart.products[existsProductIndex].quantity++;
-
-//         } else {
-//                 cart.products.push({ product: pid, quantity: quantity || 1 });
-//             }
-
-
-//         cart.products.forEach(item => {
-//             console.log(`Producto: ${item.product.title}, Precio: ${item.product.price}, Cantidad: ${item.quantity}`);
-//         });
-
-
-//         cart.total = cart.products.reduce((acc, item) => acc + item.quantity * product.price, 0);
-
-//         await cart.save();
-//         return res.status(200).json({ message: 'Producto agregado al carrito', cart });
-//     } catch (error) {
-//         console.error("Error al agregar producto al carrito", error);
-//         res.status(500).json({ error: "Ocurrió un error al agregar producto al carrito" });
-//     }
-// });
-
-
 router.post("/carts/:cid/products/:pid", async (req, res) => {
     try {
         let { cid, pid } = req.params;
@@ -110,7 +67,6 @@ router.post("/carts/:cid/products/:pid", async (req, res) => {
             return res.status(404).json({ error: "Carrito no encontrado" });
         }
 
-
         let product = await productsModel.findById(pid);
         console.log(product);
         if (!product) {
@@ -122,29 +78,20 @@ router.post("/carts/:cid/products/:pid", async (req, res) => {
 
         if (existsProductIndex !== -1) {
             cart.products[existsProductIndex].quantity += (quantity || 1);
-
-
-           
         } else {
             cart.products.push({ product: pid, quantity: quantity || 1 });
         }
     
-
-
         cart.products.forEach(item => {
             console.log(`Producto: ${item.product.title}, Precio: ${item.product.price}, Cantidad: ${item.quantity}`);
         });
-
-
-    //  cart.total = cart.products.reduce((acc, item) => acc + (item.product.quantity * item.product.price), 0);
         
         cart.total = cart.products.reduce((acc, item) => {
-            let price = item.product.price || 0; // Asigna un valor predeterminado si item.product.price es undefined
+            let price = item.product.price || 0;
             console.log(item.product.price);
             return acc + (item.quantity * price);
         }, 0);
         
-
         await cart.save();
         return res.status(200).json({ message: 'Producto agregado al carrito', cart });
     } catch (error) {
@@ -152,16 +99,6 @@ router.post("/carts/:cid/products/:pid", async (req, res) => {
         res.status(500).json({ error: "Ocurrió un error al agregar producto al carrito" });
     }
 });
-
-
-
-
-
-
-
-
-
-
 
 router.delete("/carts/:cid/products/:pid", async (req, res) => {
     try {

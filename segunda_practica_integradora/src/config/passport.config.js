@@ -79,7 +79,7 @@ const initializePassport = () => {
                     age: "",
                     email: profile._json.email,
                     password: "",
-                    role: "User"
+                    role: "user"
                 }
                 let result = await userService.create(newUser)
                 done(null, result)

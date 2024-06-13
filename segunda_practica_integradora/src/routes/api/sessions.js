@@ -1,7 +1,6 @@
 import { Router } from "express";
-// import User from "../../models/user.model.js";
 import passport from "passport";
-// import { createHash, isValidPassword } from "../../utils.js";
+import { isAuthenticated } from "../../middleware/auth.js";
 
 const router = Router();
 
@@ -45,6 +44,18 @@ router.post("/logout", (req, res) => {
         if (err) return res.status(500).send("Error al cerrar la sesión");
         res.redirect("/login")
     });
+});
+
+router.get("/current", isAuthenticated, (req, res) => {
+  try {
+      if (!req.session || !req.session.user) {
+        return res.redirect("/login");
+      }
+      res.render("current", { user: req.session.user });
+  } catch (error) {
+      console.error("Error al obtener el usuario actual:", error);
+      return res.status(500).send({ error: "Error al obtener el usuario actual" });
+  }
 });
 
 router.get("/github", passport.authenticate("github", {scope: ["user.email"]}), async (req, res) => {

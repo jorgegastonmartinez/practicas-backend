@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, unique: true },
   age: Number,
   password: String,
-  role: { type: String, default: 'usuario' }
+  role: { type: String, default: 'user' }
 });
 
 const firstCollection = mongoose.model(userCollection, userSchema);
