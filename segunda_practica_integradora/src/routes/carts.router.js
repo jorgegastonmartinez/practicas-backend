@@ -93,7 +93,6 @@ router.post("/carts/:cid/products/:pid", async (req, res) => {
           (acc, item) => acc + item.quantity * product.price,
           0
         );
-       
 
         await cart.save();
         return res.status(200).json({ message: 'Producto agregado al carrito', cart });
