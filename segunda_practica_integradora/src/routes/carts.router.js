@@ -14,7 +14,7 @@ router.post("/carts", isAuthenticated, async (req, res) => {
             return res.status(400).json({ error: "El ID del usuario no está definido en la sesión" });
         }
 
-        let existingCart = await cartModel.findOne({ user: userId });
+        let existingCart = await cartModel.findOne({ user: userId }).populate('user');
 
         if (existingCart) {
             return res.json({message: "Ya existe un carrito para este usuario", cart: existingCart });
@@ -39,7 +39,7 @@ router.get("/carts/:cid", async (req, res) => {
         if (!mongoose.Types.ObjectId.isValid(cid)) {
             return res.status(400).json({ error: "ID de carrito no válido" });
         }
-        const cart = await cartModel.findById(cid).populate('products.product').lean();
+        const cart = await cartModel.findById(cid).populate('products.product').populate('user').lean();
         
         if (!cart) {
             return res.status(404).json({ error: "Carrito no encontrado" });
@@ -61,7 +61,7 @@ router.post("/carts/:cid/products/:pid", async (req, res) => {
             return res.status(400).json({ error: "ID de carrito o producto no válido" });
         }
 
-        let cart = await cartModel.findById(cid).populate('products.product');
+        let cart = await cartModel.findById(cid).populate('products.product').populate('user');
         if (!cart) {
             console.error("Carrito no encontrado");
             return res.status(404).json({ error: "Carrito no encontrado" });
@@ -78,20 +78,23 @@ router.post("/carts/:cid/products/:pid", async (req, res) => {
 
         if (existsProductIndex !== -1) {
             cart.products[existsProductIndex].quantity += (quantity || 1);
+            
         } else {
             cart.products.push({ product: pid, quantity: quantity || 1 });
         }
+
+        cart = await cart.populate('products.product');
     
         cart.products.forEach(item => {
             console.log(`Producto: ${item.product.title}, Precio: ${item.product.price}, Cantidad: ${item.quantity}`);
         });
         
-        cart.total = cart.products.reduce((acc, item) => {
-            let price = item.product.price || 0;
-            console.log(item.product.price);
-            return acc + (item.quantity * price);
-        }, 0);
-        
+        cart.total = cart.products.reduce(
+          (acc, item) => acc + item.quantity * product.price,
+          0
+        );
+       
+
         await cart.save();
         return res.status(200).json({ message: 'Producto agregado al carrito', cart });
     } catch (error) {
@@ -100,14 +103,6 @@ router.post("/carts/:cid/products/:pid", async (req, res) => {
     }
 });
 
-
-
-
-
-
-
-
-
 router.delete("/carts/:cid/products/:pid", async (req, res) => {
     try {
         const { cid, pid } = req.params;
@@ -115,7 +110,7 @@ router.delete("/carts/:cid/products/:pid", async (req, res) => {
         if (!mongoose.Types.ObjectId.isValid(cid) || !mongoose.Types.ObjectId.isValid(pid)) {
             return res.status(400).json({ error: "ID carrito o producto no válido" });
         }
-        let cart = await cartModel.findById(cid).populate('products.product');
+        let cart = await cartModel.findById(cid).populate('products.product').populate('user');
         if (!cart) {
             return res.status(404).json({ error: "Carrito no encontrado" });
         }
@@ -146,7 +141,7 @@ router.put("/carts/:cid", async (req, res) => {
     const { products } = req.body;
 
     try {
-        let cart = await cartModel.findById(cid).populate('products.product');
+        let cart = await cartModel.findById(cid).populate('products.product').populate('user');
         if (!cart) {
             return res.status(404).json({ error: 'Carrito no encontrado' });
         }
@@ -167,7 +162,7 @@ router.put("/carts/:cid/products/:pid", async (req, res) => {
     const { cid, pid } = req.params;
     const { quantity } = req.body;
     try {
-        let cart = await cartModel.findById(cid).populate('products.product');
+        let cart = await cartModel.findById(cid).populate('products.product').populate('user');
         if (!cart) {
             return res.status(404).json({ error: 'Carrito no encontrado' });
         }
@@ -197,7 +192,7 @@ router.delete("/carts/:cid", async (req, res) => {
             return res.status(400).json({ error: "ID de carrito no válido" });
         }
 
-        let cart = await cartModel.findById(cid).populate('products.product');
+        let cart = await cartModel.findById(cid).populate('products.product').populate('user');
         if (!cart) {
             return res.status(404).json({ error: 'Carrito no encontrado' });
         }
