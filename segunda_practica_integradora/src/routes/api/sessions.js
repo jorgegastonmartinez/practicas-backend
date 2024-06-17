@@ -5,7 +5,7 @@ import { isAuthenticated } from "../../middleware/auth.js";
 const router = Router();
 
 router.post("/register", passport.authenticate("register", {failureRedirect: "failregister"}), async (req, res) => {
-   res.redirect("/login");
+  res.redirect("/login");
   });
 
 router.get("/failregister", async (req, res) => {

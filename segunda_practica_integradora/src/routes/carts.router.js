@@ -13,7 +13,6 @@ router.post("/carts", isAuthenticated, async (req, res) => {
         if (!userId) {
             return res.status(400).json({ error: "El ID del usuario no está definido en la sesión" });
         }
-
         let existingCart = await cartModel.findOne({ user: userId }).populate('user');
 
         if (existingCart) {
@@ -23,9 +22,7 @@ router.post("/carts", isAuthenticated, async (req, res) => {
             user: userId,
             products: [],
         })
-
         await newCart.save();
-
         res.json({ message: "Carrito creado correctamente", cart: newCart})
         } catch (error) {
             console.error("Error al crear el carrito:", error);
@@ -82,7 +79,6 @@ router.post("/carts/:cid/products/:pid", async (req, res) => {
         } else {
             cart.products.push({ product: pid, quantity: quantity || 1 });
         }
-
         cart = await cart.populate('products.product');
     
         cart.products.forEach(item => {
@@ -90,7 +86,7 @@ router.post("/carts/:cid/products/:pid", async (req, res) => {
         });
         
         cart.total = cart.products.reduce(
-          (acc, item) => acc + item.quantity * product.price,
+          (acc, item) => acc + item.quantity * item.product.price,
           0
         );
 
@@ -121,6 +117,7 @@ router.delete("/carts/:cid/products/:pid", async (req, res) => {
         cart.products.splice(productIndex, 1);
         
         const productIds = cart.products.map(item => item.product);
+
         const products = await productsModel.find({ _id: { $in: productIds } });
         cart.total = cart.products.reduce((acc, item) => {
             const product = products.find(p => p._id.toString() === item.product.toString());
@@ -149,6 +146,7 @@ router.put("/carts/:cid", async (req, res) => {
         }
         cart.products = products;
         cart.total = products.reduce((acc, item) => acc + item.quantity * item.product.price, 0);
+
         await cart.save();
         return res.status(200).json({ message: 'Carrito actualizado correctamente', cart });
     } catch (error) {
@@ -186,17 +184,15 @@ router.put("/carts/:cid/products/:pid", async (req, res) => {
 router.delete("/carts/:cid", async (req, res) => {
     const { cid } = req.params;
     try {
-
         if (!mongoose.Types.ObjectId.isValid(cid)) {
             return res.status(400).json({ error: "ID de carrito no válido" });
         }
-
         let cart = await cartModel.findById(cid).populate('products.product').populate('user');
         if (!cart) {
             return res.status(404).json({ error: 'Carrito no encontrado' });
         }
-        console.log(cart);
         cart.products = [];
+        
         cart.total = 0;
         await cart.save();
         return res.status(200).json({ message: 'Todos los productos han sido eliminados del carrito', cart });
