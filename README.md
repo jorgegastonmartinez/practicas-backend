@@ -1,6 +1,6 @@
 ## Título del Proyecto
 
-Segunda práctica integradora clase 24
+Tercera práctica integradora clase 37.
 
 ## Curso
 
@@ -19,7 +19,7 @@ npm start
 
 ## Instrucciones de uso
 
-Descargue el proyecto, desde GitHub, con el comando git clone. Dentro del package.json modifique el  "start": "node --watch segunda_practica_integradora/src/app.js". 
+Descargue el proyecto, desde GitHub, con el comando git clone. Dentro del package.json modifique el  "start": "node --watch tercera_practica_integradora/src/app.js". 
 Corra la app con el comando npm start.
 
 ## Imagenes del proyecto
@@ -27,14 +27,7 @@ Corra la app con el comando npm start.
 Mustra de modelo users.
 
 ![](./segunda_practica_integradora/src/public/img/Captura%20de%20pantalla%202024-06-12%20a%20la(s)%2010.10.56 p. m..png)
-
-Muestra de sessions login.
-
-![](./segunda_practica_integradora/src/public/img/Captura%20de%20pantalla%202024-06-12%20a%20la(s)%2010.11.27 p. m..png)
-
-Muestra ruta api/sessions/current.
-
-![](./segunda_practica_integradora/src/public/img/Captura%20de%20pantalla%202024-06-12%20a%20la(s)%2010.12.28 p. m..png)
+)
 
 
 ## Contacto

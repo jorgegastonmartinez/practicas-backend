@@ -1,0 +1,125 @@
+<h2>Vista para Administrador</h2>
+<p>Bienvenido {{user.first_name}}, eres un {{user.role}}.</p>
+
+<form action="/api/sessions/logout" method="POST">
+    <button type="submit">Cerrar sesión</button>
+</form>
+
+<form action="/api/sessions/current" method="GET">
+    <button type="submit">Ir al perfil</button>
+</form>
+
+<div>
+    <h2>Mensajes de usuarios</h2>
+    <ul id="messageList">
+        {{#each messages}}
+        <li>
+            {{this.user.last_name}} - {{this.user.email}} : {{this.message}}
+            <form class="delete-message-form" data-message-id="{{this._id}}" method="POST" action="/api/admin/messages/{{this._id}}">
+                <button type="submit">Eliminar Mensaje</button>
+            </form>
+        </li>
+        {{/each}}
+    </ul>
+</div>
+
+{{#if isValid}}
+<div>
+    {{#each docs}}
+    <div>
+        <h2>Producto: {{this.title}} &nbsp; descripción: {{this.description}}</h2>
+        <h4>Precio: {{this.price}} &nbsp; Stock: {{this.stock}}</h4>
+        
+        <form class="delete-product-form" data-product-id="{{this._id}}">
+            <button type="submit">Eliminar Producto</button>
+        </form>
+    </div>
+    <br>
+    {{/each}}
+</div>
+<br>
+<div>
+    {{#if hasPrevPage}}
+    <a href="{{this.prevLink}}"><< Anterior</a>
+    {{/if}}
+    &nbsp;
+    {{this.page}}
+    &nbsp;
+    {{#if hasNextPage}}
+        <a href="{{this.nextLink}}">Siguiente >></a>
+    {{/if}} 
+</div>
+{{else}}
+<h1>No hay productos disponibles</h1>
+{{/if}}
+
+<script src="/socket.io/socket.io.js"></script>
+    
+<script>
+    const socket = io();
+
+    socket.on('chat message', function(msg) {
+        const item = document.createElement('li');
+        item.textContent = `${msg.user.first_name}: ${msg.message}`;  
+        document.getElementById('messageList').appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    document.querySelectorAll('.delete-message-form').forEach(form => {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const messageId = form.getAttribute('data-message-id');
+
+            try {
+                const response = await fetch(`/api/admin/messages/${messageId}`, {
+                    method: 'DELETE',  
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(errorText);
+                }
+
+                alert('Mensaje eliminado');
+                window.location.reload();  
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert(`Error al eliminar el mensaje: ${error.message}`);
+            }
+        });
+    });
+
+    document.querySelectorAll('.delete-product-form').forEach(form => {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const productId = form.getAttribute('data-product-id');
+            
+            try {
+                const response = await fetch(`/api/admin/products/${productId}`, {
+                    method: 'DELETE',  
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(errorText);
+                }
+
+                alert('Producto eliminado');
+                window.location.reload();  
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert(`Error al eliminar el producto: ${error.message}`);
+            }
+        });
+    });
+</script>
+</body>
+</html>
