@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
     age: Number,
     password: String,
     cart: { type: mongoose.Schema.Types.ObjectId, ref: "carts"},
-    role: { type: String, enum: ["user", "admin"], default: 'user' },resetPasswordToken: String,
+    role: { type: String, enum: ["user", "admin", "premium"], default: 'user' },resetPasswordToken: String,
     resetPasswordExpires: Date,
     previousPasswords: [String]
 });

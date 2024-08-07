@@ -19,7 +19,8 @@ import adminRouter from "./routes/admin.router.js";
 import messageRouter from "./routes/messages.router.js";
 import ticketRouter from "./routes/ticket.router.js"
 import { sessionLogger } from './middleware/auth.js';
-import userRouter from "./routes/user.router.js"
+import userRouter from "./routes/user.router.js";
+import premiumRouter from './routes/premium.router.js'
 
 dotenv.config();
 const app = express();
@@ -58,12 +59,13 @@ app.use(sessionLogger)
 
 app.use('/api/sessions', sessionsRouter);
 app.use('/', viewsRouter);
-app.use("/api", cartsRouter);
-app.use("/api", productsRouter);
-app.use("/api", adminRouter);
-app.use("/api/messages", messageRouter);
-app.use("/api", ticketRouter);
-app.use("/api/user", userRouter)
+app.use('/api', cartsRouter);
+app.use('/api', productsRouter);
+app.use('/api', adminRouter);
+app.use('/api/messages', messageRouter);
+app.use('/api', ticketRouter);
+app.use("/api/user", userRouter);
+app.use('/api/', premiumRouter);
 
 socketServer.on("connection", (socket) => {
     console.log('Un usuario se ha conectado');

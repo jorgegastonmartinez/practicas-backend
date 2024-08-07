@@ -53,10 +53,10 @@ export const loginUser = (req, res, next) => {
             role: user.role,
         };
 
-        console.log("Usuario autenticado:", req.session.user);
-
         if (user.role === 'admin') {
             return res.redirect('/admin/products');
+        } else if (user.role === 'premium') {
+            return res.redirect('premium/products')
         } else if (user.role === 'user' || "User") {
             return res.redirect('/products');
         } else {

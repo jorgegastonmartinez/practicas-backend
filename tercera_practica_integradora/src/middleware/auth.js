@@ -22,6 +22,14 @@ export const isAdmin = (req, res, next) => {
     }
 };
 
+export const isPremium = (req, res, next) => {
+    if (req.session.user && req.session.user.role === 'premium') {
+        return next();
+    } else {
+        res.redirect("/login");
+    }
+};
+
 export const isUser = (req, res, next) => {
     if (req.session.user && req.session.user.role === 'user' || "User") {
         return next();

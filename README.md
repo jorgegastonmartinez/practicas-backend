@@ -36,6 +36,10 @@ vista para generar un nuevo link en caso de que haya expirado.
 
 ![](./tercera_practica_integradora/src/public/img/Captura%20de%20pantalla%202024-08-06%20a%20la(s)%2010.19.10 p. m..png)
 
+vista de usuario premium.
+
+![](./tercera_practica_integradora/src/public/img/Captura%20de%20pantalla%202024-08-07%20a%20la(s)%208.32.57 p. m..png)
+
 ## Contacto
 
 Si tienes alguna pregunta o inquietud, puedes ponerte en contacto conmigo al correo: jgastonmartinez@gmail.com.
