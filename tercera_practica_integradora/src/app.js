@@ -56,7 +56,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(sessionLogger)
 
-
 app.use('/api/sessions', sessionsRouter);
 app.use('/', viewsRouter);
 app.use("/api", cartsRouter);
@@ -70,7 +69,7 @@ socketServer.on("connection", (socket) => {
     console.log('Un usuario se ha conectado');
 
     socket.on('chat message', (msg) => {
-        io.emit('chat message', msg);  // Emitir el mensaje a todos los clientes
+        io.emit('chat message', msg);
     });
 
     socket.on('disconnect', () => {

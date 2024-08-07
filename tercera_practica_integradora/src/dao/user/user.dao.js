@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import usersModel from "../../models/user.model.js";
 
 export default class User {

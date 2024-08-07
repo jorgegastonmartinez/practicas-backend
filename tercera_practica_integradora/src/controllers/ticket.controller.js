@@ -1,14 +1,9 @@
-import mongoose from 'mongoose';
 import Ticket from '../dao/ticket/ticket.dao.js'
-import User from '../dao/user/user.dao.js'
-import Product from '../dao/product/product.dao.js'
 import Cart from "../dao/cart/cart.dao.js"
 import cartsModel from '../models/cart.model.js';
 import UserDTO from "../dto/user.dto.js";
 
 const ticketsService = new Ticket()
-const usersService = new User()
-const productsService = new Product()
 const cartService = new Cart()
 
 export const getTickets = async (req, res) => {

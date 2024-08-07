@@ -5,7 +5,7 @@ export const getUserFromSession = (req) => {
         throw new Error("No hay sesión activa");
     }
 };
-  
+
 export const setUserSession = (req, user) => {
     req.session.user = {
         _id: user._id,

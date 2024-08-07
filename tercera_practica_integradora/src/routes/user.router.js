@@ -4,7 +4,7 @@ import { getUsers, getUserById, saveUser } from "../controllers/user.controller.
 const router = Router();
 
 router.get("/", getUsers);
-router.get("/uid", getUserById)
+router.get("/:uid", getUserById)
 router.post("/", saveUser)
 
 export default router;
