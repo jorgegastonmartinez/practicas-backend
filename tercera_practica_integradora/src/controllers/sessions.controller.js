@@ -133,7 +133,8 @@ export const forgotPassword = async (req, res) => {
 
     try {
         transport.sendMail(mailOptions);
-        res.status(200).send('Email enviado correctamente');
+        
+        res.render('forgot-password-confirmation', { email });
     } catch (err) {
         console.error('Error al enviar el email:', err);
         res.status(500).send('Error al enviar el email');

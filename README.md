@@ -24,12 +24,18 @@ Corra la app con el comando npm start.
 
 ## Imagenes del proyecto
 
-Mustra de modelo users.
+Vista envío de link al mail para reestablecer la contraseña.
 
-![](./segunda_practica_integradora/src/public/img/Captura%20de%20pantalla%202024-06-12%20a%20la(s)%2010.10.56 p. m..png)
-)
+![](./tercera_practica_integradora/src/public/img/Captura%20de%20pantalla%202024-08-06%20a%20la(s)%2010.17.24 p. m..png)
 
+Vista restricción para restablecer contraseña con una ya utilizada anteriormente.
+
+![](./tercera_practica_integradora/src/public/img/Captura%20de%20pantalla%202024-08-06%20a%20la(s)%2010.18.37 p. m..png)
+
+vista para generar un nuevo link en caso de que haya expirado.
+
+![](./tercera_practica_integradora/src/public/img/Captura%20de%20pantalla%202024-08-06%20a%20la(s)%2010.19.10 p. m..png)
 
 ## Contacto
 
-Si tienes alguna pregunta o inquietud, puedes ponerte en contacto conmigo al correo: jorge_gmartinez@hotmail.com
+Si tienes alguna pregunta o inquietud, puedes ponerte en contacto conmigo al correo: jgastonmartinez@gmail.com.
