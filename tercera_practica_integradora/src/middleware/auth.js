@@ -40,7 +40,7 @@ export const isUser = (req, res, next) => {
 
 export const sessionLogger = (req, res, next) => {
     if (req.session && req.session.user) {
-        console.log("Sesión activa:", req.session.user);
+        console.log("Sesión activa");
     } else {
         console.log("No hay sesión activa");
     }

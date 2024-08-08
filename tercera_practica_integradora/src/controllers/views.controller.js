@@ -27,11 +27,9 @@ export const renderCart = async (req, res) => {
     const { cid } = req.params;
 
     const user = req.session.user;
-    console.log('User:', user);
 
     const cart = await cartModel.findById(cid).populate('products.product').populate('user').lean();
 
-    console.log(cart);
     if (!cart) {
     return res.status(404).json({ error: "Carrito no encontrado" });
     }

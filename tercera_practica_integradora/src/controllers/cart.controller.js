@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import CartDAO from '../dao/cart/cart.dao.js';
 import TicketDAO from "../dao/ticket/ticket.dao.js";
-
 import cartsModel from "../models/cart.model.js";
 import productsModel from "../models/product.model.js";
 import usersModel from "../models/user.model.js";
