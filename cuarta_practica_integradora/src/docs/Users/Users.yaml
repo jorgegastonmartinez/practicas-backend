@@ -1,0 +1,182 @@
+paths:
+  /api/user/:
+    get:
+      summary: Obtiene todos los usuarios
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Los usuarios fueron obtenidos correctamente desde la base de datos
+          content:
+            aplication/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo en la conexión con la base de datos
+    post:
+      summary: Crea un usuario nuevo
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/createUser'
+      responses:
+        "201":
+          description: Usuario creado correctamente
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Solicitud incorrecta. Verifica los datos
+        "500":
+          description: Error interno en el servidor
+  /api/user/{uid}:
+    get:
+      summary: Obtiene un usuario solo, a partir de su Id
+      tags:
+        - Users
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        description: id del usuario que se desea solicitar.
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Usuario encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "500":
+          description: Error interno del servidor
+    put:
+      summary: Actualiza un usuario a partir de su id
+      tags:
+        - Users
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        description: id del usuario que desea actualizar.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/updateUser'
+      responses: 
+        "200":
+          description: Usuario actualizado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado por MongoDB
+        first_name:
+          type: string
+          description: Nombre del usuario
+        last_name:
+          type: string
+          description: Apellido del usuario
+        email:
+          type: string
+          description: Correo del usuario, este campo es único
+        age: 
+          type: string
+          description: Edad del usuario
+        pasword:
+          type: string
+          description: Contraseña hasheada del usuario
+        role: 
+          type: string
+          description: Devuelve el rol del usuario. Pueden ser user (por defecto), premium o admin
+        resetPasswordToken:
+          type: string
+          description: Muestra el token solicitado por el usuario en el caso de que haya olvidado la contraseña
+        resetPasswordExpires:
+          type: date
+          description: Muestra la fecha en la cual expira el token para reataurar la contraseña
+        previousPasswords:
+          type: string
+          description: Muestra las contraseñas antiguas hasheadas, en el caso de que el usuario haya solicitado una nueva contraseña
+        cart:
+          type: array
+          description: Muestra el carrito del usuario con los productos añadidos. Si no hay productos añadidos al carrito, muestra un array vacío
+      example:
+        _id: ObjectId("66b2c6ce66c9922c264dc1d3")
+        first_name: Roberto
+        last_name: Manso
+        email: robertoM@correo.com
+        age: 40
+        password: $2b$10$FfSXJZFVZ1GsdssKOfz9aO0Dtt01FB1Ln5vrEDeSBQgwhp8SemVj6
+        role: user
+        resetPasswordToken: 1e80da98d332bc738b61f0b348487a16edff1da4638fdfac0309f10e268cffd3
+        resetPasswordExpires: 2024-08-07T02:44:57.304Z"
+        previousPasswords: $2b$10$kmvnh0u7jj5osQnt2elwfOJN8J6qzZfB/X7IoupDLcetHdn51FEoi
+        cart: []
+  requestBodies:
+    updateUser:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: Nombre del usuario
+        last_name:
+          type: string
+          description: Apellido del usuario
+        email:
+          type: string
+          description: Correo del usuario, este campo es único
+        age:
+          type: number
+          description: Edad del usuario
+        password:
+          type: string
+          description: Contraseña del usuario, posteriormente será hasheada
+      example:
+        first_name: Maria
+        last_name: Gomez
+        email: marigomezl@mail.com
+        age: 36
+        pasword: holamaria123
+    createUser:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: Nombre del usuario
+        last_name:
+          type: string
+          description: Apellido del usuario
+        email:
+          type: string
+          description: Correo del usuario, este campo es único
+        age:
+          type: number
+          description: Edad del usuario
+        password:
+          type: string
+          description: Contraseña del usuario, será hasheada antes de almacenarse en la base de datos de Mongo
+      example:
+        first_name: Juan
+        last_name: Perez
+        email: juanperez@mail.com
+        age: 36
+        pasword: contraseña1234

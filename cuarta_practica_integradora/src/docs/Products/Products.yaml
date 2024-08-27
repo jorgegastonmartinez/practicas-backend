@@ -1,0 +1,174 @@
+paths:
+  /api/products/:
+    get:
+      summary: Se obtienen todos los productos
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Todos los productos fueron obtenidos correctamente desde la base de datos de MongoDB
+          content: 
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo en la conexión con la base de datos
+    post:
+      summary: crea un nuevo producto
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#components/requestBodies/createProduct'
+      responses:
+        "201":
+          description: Producto creado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Product'
+        "400":
+          description: Solicitud incorrecta. Debes verificar que los datos sean correctos
+        "500":
+          description: Error interno del servidor
+  /api/products/{pid}:
+    get:
+      summary: Obtiene un producto, a partir de su Id
+      tags:
+        - Products
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: Id del producto que deseas solicitar
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Producto encontrado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Product'
+        "500":
+          description: Error interno del servidor
+    put:
+      summary: Actualiza un producto a partir de su Id
+      tags:
+        - Products
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: Id del producto que desea actualizar
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/updateProduct'
+      responses:
+        "200":
+          description: Producto actualizado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Product'
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado por MongoDB
+        title:
+          type: string
+          description: Título del producto
+        description:
+          type: string
+          description: Descripción del producto
+        code:
+          type: string
+          description: Código único e irrepetible del producto
+        price:
+          type: number
+          description: Precio del producto
+        stock:
+          type: number
+          description: Número de stock disponile del producto
+        category:
+          type: string
+          description: Categoria que pertenece el producto
+      example:
+        _id: ObjectId("664bfe9a7d25a36059cd4f96")
+        title: Bocata de Tortilla
+        description: Baguette, tortilla de papas, tomates secos y alioli
+        code: boc407
+        price: 5200
+        stock: 210
+        category: Bocata
+  requestBodies:
+    updateProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Título del producto
+        description:
+          type: string
+          description: Descripción del producto
+        code:
+          type: string
+          description: Código único e irrepetible del producto
+        price:
+          type: number
+          description: Precio del producto
+        stock:
+          type: number
+          description: Número de stock disponile del producto
+        category:
+          type: string
+          description: Categoria que pertenece el producto
+      example:
+        title: Porras y dulce de leche
+        description: 2 porras y dulce de leche
+        code: chu118
+        price: 4100
+        stock: 333
+        category: Churreria
+    createProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Título del producto
+        description:
+          type: string
+          description: Descripción del producto
+        code:
+          type: string
+          description: Código único e irrepetible del producto
+        price:
+          type: number
+          description: Precio del producto
+        stock:
+          type: number
+          description: Número de stock disponile del producto
+        category:
+          type: string
+          description: Categoria que pertenece el producto
+      example:
+        title: Porras y dulce de leche
+        description: 2 porras y dulce de leche
+        code: chu118
+        price: 4100
+        stock: 333
+        category: Churreria

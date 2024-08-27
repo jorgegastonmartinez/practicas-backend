@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Carrito</title>
+</head>
+<body>
+  <h1>Carrito de {{user.first_name}} {{user.last_name}}</h1>
+
+  <h1>Carrito ID: {{cart._id}}</h1>
+
+  {{#if cart}}
+    <ul>
+      {{#each cart.products}}
+        <li>
+          Producto: {{this.product.title}} - Cantidad: {{this.quantity}} - Precio: {{this.product.price}}
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p>No hay productos en el carrito.</p>
+  {{/if}}
+
+  <h2>Total: $ {{cart.total}}</h2>
+
+  <form action="/products" method="GET">
+    <button type="submit">Volver a Productos</button>
+  </form>
+</body>
+</html>

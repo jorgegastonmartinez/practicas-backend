@@ -1,0 +1,208 @@
+paths:
+  /api/carts/{cid}:
+    get:
+      summary: Obtiene un carrito específico, a partir de su Id
+      tags:
+        - Carts
+      parameters:
+      - name: cid
+        in: path
+        required: true
+        description: Id del carrito que deseas solicitar
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Carrito encontrado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        "500":
+          description: Error interno del servidor
+    put:
+      summary: Actualiza un carrito a partir de su Id
+      tags:
+        - Carts
+      parameters:
+      - name: cid
+        in: path
+        required: true
+        description: Id del carrito que desea actualizar
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/updateCart'
+      responses:
+        "200":
+          description: Carrito actualizado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+    delete:
+      summary: Eliminar carrito
+      description: Elimina un carrito existente por su ID.
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+            description: ID del carrito que se desea eliminar
+      responses:
+        '200':
+          description: Carrito eliminado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Carrito eliminado exitosamente"
+        '400':
+          description: Error de validación
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "ID de carrito no válido"
+        '404':
+          description: Carrito no encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Carrito no encontrado"
+        '500':
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Ocurrió un error al eliminar el carrito"
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        user:
+          type: string
+          description: ID del usuario al que pertenece el carrito solicitado
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+                description: ID del producto
+              quantity:
+                type: number
+                description: Cantidad del producto
+        total:
+          type: number
+          description: Total del carrito seleccionado
+      example:
+        user: "60c72b2f9b1d8a001f647b93"
+        products:
+          - product: "60c72b2f9b1d8a001f647b94"
+            quantity: 4
+          - product: "60c72b2f9b1d8a001f647b95"
+            quantity: 2
+        total: 15800
+  requestBodies:
+    createCart:
+      description: Datos necesarios para crear un nuevo carrito.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - user
+              - products
+            properties:
+              user:
+                type: string
+                description: ID del usuario al que pertenece el carrito. Debe ser un ObjectId válido de MongoDB.
+              products:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    product:
+                      type: string
+                      description: ID del producto (ObjectId de MongoDB) que se añadirá al carrito.
+                    quantity:
+                      type: number
+                      description: Cantidad del producto a añadir al carrito. Debe ser un número entero mayor o igual a 1.
+                      example: 3
+                description: Lista de productos en el carrito.
+                example:
+                  - product: "60c72b2f9b1d8a001f647b94"
+                    quantity: 2
+                  - product: "60c72b2f9b1d8a001f647b95"
+                    quantity: 1
+              total:
+                type: number
+                description: Total del carrito. Se calcula automáticamente basándose en los productos añadidos.
+                example: 1500
+            example:
+              user: "60c72b2f9b1d8a001f647b93"
+              products:
+                - product: "60c72b2f9b1d8a001f647b94"
+                  quantity: 2
+                - product: "60c72b2f9b1d8a001f647b95"
+                  quantity: 1
+              total: 1500
+    updateCart:
+      description: Datos necesarios para actualizar un carrito existente.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              user:
+                type: string
+                description: ID del usuario al que pertenece el carrito. Este campo puede omitirse si no se desea actualizar el usuario.
+              products:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    product:
+                      type: string
+                      description: ID del producto (ObjectId de MongoDB) que se actualizará en el carrito.
+                    quantity:
+                      type: integer
+                      description: Cantidad del producto en el carrito. Debe ser un número entero mayor o igual a 1.
+                      example: 5
+                description: Lista de productos en el carrito. Puede incluir productos nuevos o modificar la cantidad de productos existentes.
+              total:
+                type: number
+                description: Total actualizado del carrito. Se recalcula automáticamente basándose en los productos.
+                example: 2500
+            example:
+              user: "60c72b2f9b1d8a001f647b93"
+              products:
+                - product: "60c72b2f9b1d8a001f647b94"
+                  quantity: 5
+                - product: "60c72b2f9b1d8a001f647b95"
+                  quantity: 2
+              total: 2500
