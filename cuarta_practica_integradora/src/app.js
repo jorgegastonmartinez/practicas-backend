@@ -22,7 +22,6 @@ import messageRouter from "./routes/messages.router.js";
 import ticketRouter from "./routes/ticket.router.js"
 import { sessionLogger } from './middleware/auth.js';
 import userRouter from "./routes/user.router.js";
-import premiumRouter from './routes/premium.router.js'
 
 dotenv.config();
 const app = express();
@@ -33,7 +32,6 @@ const httpServer = app.listen(PORT, () => {
 })
 const socketServer = new Server(httpServer);
 
-//
 const swaggerOptions = {
     definition: {
         openapi: "3.0.1",
@@ -47,8 +45,6 @@ const swaggerOptions = {
 
 const specs = swaggerJsDoc(swaggerOptions);
 app.use('/apidocs', SwaggerUiExpress.serve, SwaggerUiExpress.setup(specs));
-
-//
 
 app.engine('handlebars', engine({
     extname: '.handlebars',
@@ -83,8 +79,7 @@ app.use('/api', productsRouter);
 app.use('/api', adminRouter);
 app.use('/api/messages', messageRouter);
 app.use('/api', ticketRouter);
-app.use("/api/user", userRouter);
-app.use('/api/', premiumRouter);
+app.use("/api/users", userRouter);
 
 socketServer.on("connection", (socket) => {
     console.log('Un usuario se ha conectado');

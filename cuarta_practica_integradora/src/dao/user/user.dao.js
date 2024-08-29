@@ -38,4 +38,30 @@ export default class User {
             console.log(error)
         }
     }
+
+    addDocuments = async (id, documents) => {
+        try {
+            const result = await usersModel.updateOne(
+                { _id: id },
+                { $push: { documents: { $each: documents } } }
+            );
+            return result;
+        } catch (error) {
+            console.error("Error al agregar documentos:", error);
+            throw new Error("Ocurrió un error al agregar documentos");
+        }
+    }
+
+    updateLastConnection = async (id, date) => {
+        try {
+            const result = await usersModel.updateOne(
+                { _id: id },
+                { $set: { last_connection: date } }
+            );
+            return result;
+        } catch (error) {
+            console.error("Error al actualizar last_connection:", error);
+            throw new Error("Ocurrió un error al actualizar la última conexión");
+        }
+    }
 }
